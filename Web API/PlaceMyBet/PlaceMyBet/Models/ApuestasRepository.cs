@@ -183,5 +183,23 @@ namespace PlaceMyBet.Models
             return cantidad;
             
         }
+        internal List<Apuesta> RetrieveById(int id)
+        {
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            command.CommandText = "select * from apuesta WHERE idMercado ="+id+";";
+            con.Open();
+            MySqlDataReader res = command.ExecuteReader();
+
+            Apuesta a = null;
+            List<Apuesta> listaApuestas = new List<Apuesta>();
+            while (res.Read())
+            {
+                Debug.WriteLine("Recuperado: " + res.GetInt32(0) + " " + res.GetDouble(1) + " " + res.GetDouble(2) + " " + res.GetDouble(3) + " " + res.GetString(4) + " " + res.GetInt32(5) + " " + res.GetString(6) + " " + res.GetString(7));
+                a = new Apuesta(res.GetInt32(0), res.GetDouble(1), res.GetDouble(2), res.GetDouble(3), res.GetString(4), res.GetInt32(5), res.GetString(6), res.GetString(7));
+                listaApuestas.Add(a);
+            }
+            return listaApuestas;
+        }
     }
 }

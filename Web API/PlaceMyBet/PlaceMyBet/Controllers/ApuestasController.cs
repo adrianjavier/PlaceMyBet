@@ -37,6 +37,14 @@ namespace PlaceMyBet.Controllers
             return cantidad;
         }
 
+        [Route("api/Apuestas")]
+        public List<Apuesta> Get(int id)
+        {
+            ApuestasRepository rep = new ApuestasRepository();
+            List<Apuesta> lista = rep.RetrieveById(id);
+            return lista;
+        }
+
         public void Post([FromBody]Apuesta a)
         {
             var repo = new ApuestasRepository();
