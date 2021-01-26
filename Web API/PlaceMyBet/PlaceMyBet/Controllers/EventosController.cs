@@ -8,12 +8,9 @@ using System.Web.Http;
 
 namespace PlaceMyBet.Controllers
 {
-    [Route("api/Eventos/{action}")]
     public class EventosController : ApiController
     {
         
-        [HttpGet]
-        [ActionName("Get")]
         public IEnumerable<Evento> Get()
         {
             EventosRepository rep = new EventosRepository();
@@ -21,8 +18,6 @@ namespace PlaceMyBet.Controllers
             return lista;
         }
 
-        [HttpGet]
-        [ActionName("GetDTO")]
         public IEnumerable<EventoDTO> GetDTO()
         {
             EventosRepository rep = new EventosRepository();
@@ -32,10 +27,12 @@ namespace PlaceMyBet.Controllers
 
 
 
-        // GET: api/Eventos/5
-        public string Get(int id)
+        [Route("api/ApuestasExamen")]
+        public EventoDTO2 Get(string equipo)
         {
-            return "value";
+            EventosRepository rep = new EventosRepository();
+            EventoDTO2 e = rep.RetrieveDTO2(equipo);
+            return e;
         }
 
         // POST: api/Eventos

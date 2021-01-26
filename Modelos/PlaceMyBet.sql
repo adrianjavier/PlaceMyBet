@@ -5,14 +5,14 @@ CREATE TABLE IF NOT EXISTS `PlaceMyBet`.`Evento` (
   `idEvento` INT NOT NULL AUTO_INCREMENT,
   `local` VARCHAR(45) NOT NULL,
   `visitante` VARCHAR(45) NOT NULL,
-  `fecha` DATE NOT NULL,
+  `fecha`  VARCHAR(20) NOT NULL,
   PRIMARY KEY (`idEvento`));
 
 CREATE TABLE IF NOT EXISTS `PlaceMyBet`.`Mercado` (
   `idMercado` INT NOT NULL AUTO_INCREMENT,
   `cuotaOver` DOUBLE NOT NULL,
-  `cuotaUnder` DOUBLE NOT NULL,
-  `dineroOver` DOUBLE NOT NULL,
+  `cuotaUnder` DOUBLE Not NULL,
+  `dineroOver` DOUBLE NOt NULL,
   `dineroUnder` DOUBLE NOT NULL,
   `tipoMercado` DOUBLE NOT NULL,
   `idEvento` INT NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `PlaceMyBet`.`Apuesta` (
   `tipoMercado` DOUBLE NOT NULL,
   `cuota` DOUBLE NOT NULL,
   `dinero` DOUBLE NOT NULL,
-  `fecha` DATE NOT NULL,
+  `fecha` VARCHAR(40) NOT NULL,
   `idMercado` INT NOT NULL,
   `gmail` VARCHAR(50) NOT NULL,
   `tipoCuota` VARCHAR(10) NOT NULL,

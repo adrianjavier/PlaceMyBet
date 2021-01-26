@@ -34,4 +34,16 @@ namespace PlaceMyBet.Models
             this.fecha = fecha;
         }
     }
+
+    public class EventoDTO2
+    {
+        public string rival { get; set; }
+        public string cantidad { get; set; }
+
+        public EventoDTO2(string r, string c)
+        {
+            this.rival = r;
+            this.cantidad = c;
+        }
+    }
 }

@@ -72,5 +72,48 @@ namespace PlaceMyBet.Models
                 return null;
             }
         }
+
+        internal EventoDTO2 RetrieveDTO2(string c)
+        {
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            command.CommandText = "select * from evento where local='" + c + "' OR visitante='"+c+"';";
+
+                con.Open();
+                MySqlDataReader res = command.ExecuteReader();
+                EventoDTO2 e;
+                double cantidad = 0;
+                string rival = "";
+                int id;
+                res.Read();
+                id = res.GetInt32(0);
+                if (res.GetString(1).Equals(c))
+                {
+                    rival = res.GetString(2);
+                }
+                else
+                {
+                    rival = res.GetString(1);
+                }
+                con.Close();
+                res.Close();
+                command.CommandText = "select * from mercado where idEvento=" + id + ";";
+                con.Open();
+                MySqlDataReader res2 = command.ExecuteReader();
+                while (res2.Read())
+                {
+                    cantidad = cantidad + res2.GetDouble(3) + res2.GetDouble(4);
+                }
+                if (cantidad == 0)
+                {
+                    e = new EventoDTO2(rival, "No existe ninguna apuesta"); 
+                }
+                else
+                {
+                    e = new EventoDTO2(rival, cantidad.ToString());
+                }
+                return e;
+
+        }
     }
 }
