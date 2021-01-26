@@ -154,5 +154,34 @@ namespace PlaceMyBet.Models
 
 
         }
+        internal int RetrieveByCuota(string g, double c)
+        {
+            MySqlConnection con = Connect();
+            MySqlCommand command = con.CreateCommand();
+            CultureInfo culInfo = new System.Globalization.CultureInfo("es-ES");
+
+            culInfo.NumberFormat.NumberDecimalSeparator = ".";
+
+            culInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+            culInfo.NumberFormat.PercentDecimalSeparator = ".";
+            culInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+            System.Threading.Thread.CurrentThread.CurrentCulture = culInfo;
+            int cantidad = 0;
+
+            command.CommandText = "select * from apuesta where gmail='" + g + "' AND cuota >"+c+";";
+            con.Open();
+            MySqlDataReader res = command.ExecuteReader();
+            res.Read();
+            while (res.Read())
+            {
+                if(cantidad == 0)
+                {
+                    cantidad++;
+                }
+                cantidad++;
+            }
+            return cantidad;
+            
+        }
     }
 }

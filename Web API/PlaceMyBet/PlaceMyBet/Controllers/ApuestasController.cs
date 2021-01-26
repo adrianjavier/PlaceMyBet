@@ -29,10 +29,12 @@ namespace PlaceMyBet.Controllers
             return lista;
         }
 
-        // GET: api/Apuestas/5
-        public string Get(int id)
+        [Route("api/Apuestas")]
+        public int Get(string mail, double cuota)
         {
-            return "value";
+            ApuestasRepository rep = new ApuestasRepository();
+            int cantidad = rep.RetrieveByCuota(mail, cuota);
+            return cantidad;
         }
 
         public void Post([FromBody]Apuesta a)
