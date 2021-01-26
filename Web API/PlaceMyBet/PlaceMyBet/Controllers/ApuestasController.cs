@@ -38,10 +38,10 @@ namespace PlaceMyBet.Controllers
         }
 
         [Route("api/Apuestas")]
-        public List<Apuesta> Get(int id)
+        public List<Object> Get(int id)
         {
             ApuestasRepository rep = new ApuestasRepository();
-            List<Apuesta> lista = rep.RetrieveById(id);
+            List<Object> lista = rep.RetrieveById(id);
             return lista;
         }
 

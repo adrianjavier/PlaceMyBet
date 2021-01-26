@@ -166,24 +166,21 @@ namespace PlaceMyBet.Models
             culInfo.NumberFormat.PercentDecimalSeparator = ".";
             culInfo.NumberFormat.CurrencyDecimalSeparator = ".";
             System.Threading.Thread.CurrentThread.CurrentCulture = culInfo;
-            int cantidad = 0;
+            int cantidad = 1;
 
-            command.CommandText = "select * from apuesta where gmail='" + g + "' AND cuota >"+c+";";
+            command.CommandText = "select * from apuesta where gmail='" + g + "' AND cuota >" + c + ";";
             con.Open();
             MySqlDataReader res = command.ExecuteReader();
-            res.Read();
+            List<Apuesta> lista = new List<Apuesta>();
             while (res.Read())
             {
-                if(cantidad == 0)
-                {
-                    cantidad++;
-                }
-                cantidad++;
+                lista.Add(new Apuesta(res.GetInt32(0), res.GetDouble(1), res.GetDouble(2), res.GetDouble(3), res.GetString(4), res.GetInt32(5), res.GetString(6), res.GetString(7)));
             }
+            cantidad = lista.Count();
             return cantidad;
-            
+
         }
-        internal List<Apuesta> RetrieveById(int id)
+        internal List<Object> RetrieveById(int id)
         {
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
@@ -192,14 +189,22 @@ namespace PlaceMyBet.Models
             MySqlDataReader res = command.ExecuteReader();
 
             Apuesta a = null;
-            List<Apuesta> listaApuestas = new List<Apuesta>();
+            List<Object> listaApuestas = new List<Object>();
             while (res.Read())
             {
                 Debug.WriteLine("Recuperado: " + res.GetInt32(0) + " " + res.GetDouble(1) + " " + res.GetDouble(2) + " " + res.GetDouble(3) + " " + res.GetString(4) + " " + res.GetInt32(5) + " " + res.GetString(6) + " " + res.GetString(7));
                 a = new Apuesta(res.GetInt32(0), res.GetDouble(1), res.GetDouble(2), res.GetDouble(3), res.GetString(4), res.GetInt32(5), res.GetString(6), res.GetString(7));
                 listaApuestas.Add(a);
             }
-            return listaApuestas;
+            if (listaApuestas.Count == 0)
+            {
+                listaApuestas.Add("Error! No hay apuestas con esta id");
+                return listaApuestas;
+            }
+            else
+            {
+                return listaApuestas;
+            }
         }
     }
 }
